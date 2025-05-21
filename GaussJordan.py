@@ -10,7 +10,9 @@ def transposicion(matriz):
         n.append(col) 
     return n
 
-print(transposicion(m))
+t = transposicion(m)
+print(t)
+print()
 
 
 ##Dependiendo de para que se use la función, se agregarán previamente unos, ceros o lo que convenga
@@ -33,30 +35,19 @@ def GJ(matriz, valores):
                     matriz[i][j] -= (matriz[i][f]*matriz[f][j])
                 valores[i] -= (valores[i]*matriz[f][j])
 
-    print(matriz)
-
-    for pf in range(len(matriz)-1, -1, -1):
-        for pc in range(0, len(matriz[pf])):
-            if matriz[pf][pc] != 0:
-                pivote = matriz[pf][pc]
-                print(f"{pf} {pc}")
-                break
-
-        else:continue
-
     for f in range(len(matriz)-1, -1, -1):
-        for c in range(len(matriz[f])-1, -1, -1):
-            mult = matriz[f-1][c]
-            for i in range(len(matriz[f])-1, -1, -1):
-                for j in range(len(matriz)-1, -1, -1):
-                    if matriz[j][i] > 0 and matriz[j][i] != pivote:
-                        matriz[j][i] += (pivote*mult)
-                        valores[j] += (valores[f]*valores[f-1])
-                    elif matriz[j][i] < 0 and matriz[j][i] != pivote:
-                        matriz[j][i] += (pivote*-mult)
-                        valores[j] += (valores[f]*-valores[f-1])
-    print()
-    print(matriz)
-    return(valores)    
+        for c in range(len(matriz[f])):
+            if matriz[f][c] == 1:
+                s_piv = matriz[f-1][c]
+                for i in range(len(matriz[f])):
+                    mult = matriz[f][i]*s_piv
+                    v_mult = valores[f]*s_piv
+                    matriz[f-1][i] -= mult
+                    valores[f] -= v_mult
 
-print(GJ(m, v))
+    return(matriz, valores) 
+
+g = GJ(m, v)
+##Bucle para imprimir
+for e in g[0]:
+    print(f"{e}|{g[1][g[0].index(e)]}")
