@@ -1,5 +1,5 @@
 ##Funciones
-'''
+
 def ingreso_datos(tipo):
     ##Caso ingresar un vector
     if tipo == 'v':
@@ -83,7 +83,7 @@ g = GJ(m, v)
 for e in g[0]:
     print(f"{e}|{g[1][g[0].index(e)]}")
 
-'''
+    
 def menor(m, i, j):
     n = []
     for f in range(len(m)):
@@ -114,19 +114,20 @@ def Determinante(m):
         columnas_nz = []
         for i in range(len(m)):
             fila_nz = 0
-            columna_nz = 0
             for j in range(len(m[0])):
-                if m[i][j] == 0 or m[i][j] == 0.0:
+                if m[i][j] == 0:
                     fila_nz += 1
-                elif m[j][i] == 0 or m[j][i] == 0.0:
-                    columna_nz += 1
                 else: continue
             filas_nz.append(fila_nz)
+
+        for j in range(len(m[0])):
+            columna_nz = 0
+            for i in range(len(m)):
+                if m[i][j] == 0:
+                    columna_nz += 1
+                else: continue
             columnas_nz.append(columna_nz)
-        print()
-        print(f"ceros filas {filas_nz}")
-        print(f"ceros columnas {columnas_nz}")
-        print()
+
         ##Encontrar la fila y columna con mas ceros
         indice_fila = 0
         indice_columna = 0
@@ -141,27 +142,16 @@ def Determinante(m):
         ##Calcular el cofactor de la matriz con base a la fila o columna
         ##Que tenga mas ceros
         if filas_nz[indice_fila] >= columnas_nz[indice_columna]:
-            print()
-            print(f"Indice fila {indice_fila}")
-            print()
             for col in range(len(m[indice_fila])):
                 n = menor(m=m, i=indice_fila, j = col)
                 p = Determinante(n)
-                det += m[indice_fila][col]*(-1**(indice_fila+col))*p
-                print()
-                print(f"det {det}")
-                print()
+                det += m[indice_fila][col]*(pow(-1, indice_fila+col+2))*p
         elif filas_nz[indice_fila] <= columnas_nz[indice_columna]:
-            print()
-            print(f"Indice columna {indice_columna}")
             for fil in range(len(m)):
                 n = menor(m=m, i = fil, j=indice_columna)
                 p = Determinante(n)
-                det += m[fil][indice_columna]*(-1**(fil+indice_columna))*p
-                print()
-                print(f"det {det}")
-                print()
-        
+                det += m[fil][indice_columna]*(pow(-1, fil+indice_columna+2))*p
+                
         return det
 
 
