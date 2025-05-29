@@ -51,3 +51,53 @@ g = GJ(m, v)
 ##Bucle para imprimir
 for e in g[0]:
     print(f"{e}|{g[1][g[0].index(e)]}")
+
+def menor(m, i, j):
+    n = []
+    for f in range(len(m)):
+        fn = []
+        for c in range(len(m[0])):
+            if c != j:
+                fn.append(m[c])
+            else: continue
+        if f != i:
+            n.append(fn)
+        else: continue
+
+def cofactor(m):
+    ##Verificar dimension de la matriz
+    if len(m) == 2:
+        for k in range(len(m)):
+            for l in range(len(m[k])):
+
+    ##Calcular el determinante de la matriz
+    else:
+    ##Encontrar los ceros de la matriz
+        filas_nz = []
+        columnas_nz = []
+        for i in range(len(m)):
+            fila_nz = 0
+            columna_nz = 0
+            for j in range(len(m[0])):
+                if m[i][j] == 0:
+                    fila_nz += 1
+                elif m[j][i] == 0:
+                    columna_nz += 1
+                else: continue
+            filas_nz.append(fila_nz)
+            columnas_nz.append(columna_nz)
+        ##Encontrar la fila y columna con mas ceros
+        indice_fila = 0
+        indice_columna = 0
+        for f in range(len(filas_nz)):
+            if filas_nz[f] > filas_nz[f+1] and f+1 <= len(filas_nz):
+                indice_fila = f
+            else: continue
+        for c in range(len(columnas_nz)):
+            if columnas_nz[c] > columnas_nz[c+1] and c+1 <= len(columnas_nz):
+                indice_columna = c
+            else: continue
+
+        if filas_nz[indice_fila] > columnas_nz[indice_columna]:
+            
+        n = menor(m=m, i=indice_fila, j=indice_columna)
