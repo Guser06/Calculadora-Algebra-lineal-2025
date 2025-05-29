@@ -83,7 +83,7 @@ g = GJ(m, v)
 for e in g[0]:
     print(f"{e}|{g[1][g[0].index(e)]}")
 
-    
+##Menor de una matriz
 def menor(m, i, j):
     n = []
     for f in range(len(m)):
@@ -97,7 +97,7 @@ def menor(m, i, j):
         else: continue
     return n
 
-
+##Determinante de una matriz cuadrada
 def Determinante(m):
     det = 0
     ##Verificar dimension de la matriz
@@ -154,6 +154,60 @@ def Determinante(m):
                 
         return det
 
+##Producto escalar de una matriz
+def Prod_Esc_Mat(a, m):
+    for i in range(len(m)):
+        for j in range(len(m[0])):
+            m[i][j] *= a
+    return m
+
+##Gauss Jordan con valores sustituida con una matriz identidad
+def Inversa(matriz):
+    ##Crear una matriz identidad de las mismas dimensiones de la matriz ingresada
+    Id = []
+    for m in range(len(matriz)):
+        Id_f = []
+        for n in range(len(matriz[m])):
+            if n == m:
+                Id.append(1)
+            elif n != m:
+                Id_f.append(0)
+            else: continue
+        Id.append(Id_f)
+        
+
+    for f in range(len(matriz)-1):
+        if f <= (len(matriz[f])-1):
+            for c in range(len(matriz[f])):
+                matriz[f][c] /= matriz[f][f]
+            Id[f] /= matriz[f][f]
+        else : continue
+
+        for i in range(f+1, len(matriz)):
+            if matriz[i][f] < 0:
+                for j in range(len(matriz[i])-1, -1, -1):
+                    matriz[i][j] += (-1*matriz[i][f]*matriz[f][j])
+                Id[i] += (-1*Id[i]*matriz[f][j])
+            elif matriz[i][f] > 0:
+                for j in range(len(matriz[i])-1, -1, -1):
+                    matriz[i][j] -= (matriz[i][f]*matriz[f][j])
+                Id[i] -= (Id[i]*matriz[f][j])
+
+    for f in range(len(matriz)-1, -1, -1):
+        for c in range(len(matriz[f])):
+            if matriz[f][c] == 1:
+                s_piv = matriz[f-1][c]
+                for i in range(len(matriz[f])):
+                    mult = matriz[f][i]*s_piv
+                    v_mult = Id[f]*s_piv
+                    matriz[f-1][i] -= mult
+                    Id[f] -= v_mult
+
+    return(Id) 
 
 matriz = [[-2, 1, -1, 0], [0, 2, 1, -3], [-1, 0, 0, 2], [1, 1, 4, 1]]
 print(f"El determinante de la matriz es {Determinante(matriz)}")
+
+print(f"El producto escalar de la matriz por 4 es {Prod_Esc_Mat(4, matriz)}")
+
+print(f"La inversa de la matriz es {Inversa(matriz)}")
